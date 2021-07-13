@@ -1,0 +1,61 @@
+version: '3'
+services:
+  nginx:
+    container_name: nginx-lara
+    image: nginx
+    volumes:
+      - ./conf/nginx/site.conf:/etc/nginx/conf.d/default.conf
+      - ./../www:/www:cached
+    ports:
+      - 8800:80
+    restart: always
+
+  php:
+    build: .
+    container_name: php-lara
+    restart: always
+    volumes:
+      - ./conf/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - ./conf/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      - ./../www:/www
+#gi:cache
+#version: '3'
+#
+#services:
+#
+#  nginx:
+#    container_name: nginx-lara
+#    image: nginx:latest
+#    ports:
+#      - "9300:80"
+#    volumes:
+#     - "./nginx/:/etc/nginx/conf.d"
+#     - "./../www:/www"
+#    restart: always
+#
+#  mysql:
+#    container_name: lara-mysql
+#    image: mariadb
+#    ports:
+#      - "3306:3306"
+#    environment:
+#      MYSQL_ROOT_PASSWORD: test
+#      MYSQL_DATABASE: test
+#  db:
+#    container_name: pgsql-lara
+#    image: postgres:10.1
+#    restart: always
+#    environment:
+#      - POSTGRES_DB=test
+#      - POSTGRES_USER=test
+#      - POSTGRES_PASSWORD=test
+#    ports:
+#      - 5432:5432
+#
+#  php:
+#    container_name: php-lara
+#    build: php
+#    volumes:
+#      - "./../www:/www"
+#      - "./php/php.ini:/usr/local/etc/php/php.ini"
+#    restart: always
